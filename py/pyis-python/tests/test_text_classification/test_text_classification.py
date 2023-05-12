@@ -26,9 +26,7 @@ class Model:
         #self._print_features(bigrams, 'bigrams: ')
         features = self.concat_featurizer.transform([unigrams, bigrams])
         features_svm = self.text_feature_to_liblinear(features)
-        #print(f'features: {features_svm}')
-        values = self.linear_svm.predict(features_svm)
-        return values
+        return self.linear_svm.predict(features_svm)
     
     def text_feature_to_liblinear(self, features:List[ops.TextFeature]) -> List[Tuple[int, float]]:
         feature_map: Dict[int, float] = {}

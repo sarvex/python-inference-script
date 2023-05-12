@@ -14,7 +14,7 @@ trie.load('tmp/trie.bin')
 
 set(data) == set(trie.items())
 
-1 == trie.lookup('Alpha')
-2 == trie.lookup('Beta')
-4 == trie.lookup('AlphaBeta')
+trie.lookup('Alpha') == 1
+trie.lookup('Beta') == 2
+trie.lookup('AlphaBeta') == 4
 trie.lookup('NonExists') # raise RuntimeError  

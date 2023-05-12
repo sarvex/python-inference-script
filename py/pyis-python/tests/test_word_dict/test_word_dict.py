@@ -13,8 +13,7 @@ class Model:
         self.dictionary = ops.WordDict(dict_data_file)
 
     def forward(self, tokens: List[str]) -> List[str]:
-        res = self.dictionary.translate(tokens)
-        return res
+        return self.dictionary.translate(tokens)
 
 class TestWordDict(unittest.TestCase):
     dict_data_file = os.path.join(os.path.dirname(__file__), 'data', 'word_dict.data.txt')

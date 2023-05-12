@@ -31,14 +31,16 @@ from pyis.python import save, load
 
 class TestOrtSessionSimple(unittest.TestCase):
     @classmethod
-    def setUpClass(self) -> None:
+    def setUpClass(cls) -> None:
         ops.OrtSession.initialize_ort()
         # initialize model
-        self.model_path = os.path.join(os.path.dirname(__file__), 'data', 'a_plus_b.onnx')
-        self.ort_session: ops.OrtSession = ops.OrtSession(
-            model_path = self.model_path,
-            input_names = ['x', 'y'],
-            output_names = ['r1', 'r2']
+        cls.model_path = os.path.join(
+            os.path.dirname(__file__), 'data', 'a_plus_b.onnx'
+        )
+        cls.ort_session: ops.OrtSession = ops.OrtSession(
+            model_path=cls.model_path,
+            input_names=['x', 'y'],
+            output_names=['r1', 'r2'],
         )
 
     def test_run(self):

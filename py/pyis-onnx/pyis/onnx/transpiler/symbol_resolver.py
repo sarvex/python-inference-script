@@ -7,9 +7,9 @@ import importlib
 
 def resolve_symbol(module, symbol: str):
 
-    if len(symbol) == 0:
+    if not symbol:
         return module
-    
+
     ns_fields = symbol.split('.')
     ns = ns_fields[0]
 
@@ -17,7 +17,7 @@ def resolve_symbol(module, symbol: str):
     if hasattr(module, ns):
         sub_module = getattr(module, ns)
         return resolve_symbol(sub_module, ".".join(ns_fields[1:]))
-    
+
     # ns doesn't exist in module, try import it as a module
     if inspect.ismodule(module):
         sub_module_spec = importlib.util.find_spec(f'{module.__name__}.{ns}')

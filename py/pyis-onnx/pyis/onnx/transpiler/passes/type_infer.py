@@ -21,7 +21,7 @@ class TypeInfer(ast.NodeVisitor):
         for i, arg in enumerate(node.args.args):
             if i==0 and arg.arg == 'self':
                 continue
-            if arg.annotation == None:
+            if arg.annotation is None:
                 raise TypeError(f'missing type annotation. function:{node.name} argument:{arg.arg}')
             self.type_dict[arg.arg] = Types.annotation_to_py(arg.annotation)
         for line in node.body:
@@ -43,13 +43,10 @@ class TypeInfer(ast.NodeVisitor):
             # FunctionCall.returns is a python class @property, keep it to 
             # avoid duplicate calculations
             types = list(self.visit_Call(node.value))
+        elif isinstance(node.value, ast.Tuple):
+            types.extend(self.visit(elt) for elt in node.value.elts)
         else:
-            # variable assignment
-            if isinstance(node.value, ast.Tuple):
-                for i, elt in enumerate(node.value.elts):
-                    types.append(self.visit(elt))
-            else:
-                types.append(self.visit(node.value))
+            types.append(self.visit(node.value))
 
         targets = node.targets[0]
         if isinstance(targets, ast.Tuple):
@@ -89,9 +86,7 @@ class TypeInfer(ast.NodeVisitor):
         return self.type_dict
     
     def print_type_dict(self):
-        res = {}
-        for k, v in self.type_dict.items():
-            res[k] = str(v)
+        res = {k: str(v) for k, v in self.type_dict.items()}
         print(json.dumps(res, indent=4))
     
     def get_function_calls(self):

@@ -45,8 +45,8 @@ def save(obj, model_path:str, prefix:str="", data_archive:str="") -> str:
 def load(model_path:str, data_archive:str="") -> str:
     if not os.path.isfile(model_path):
         raise FileNotFoundError(f'model path does not exist. path:{model_path}')
-        
-    pickle_file = model_path   
-    with ModelContextMgr(model_path, data_archive) as ctx, open(pickle_file, "rb") as f:
+
+    pickle_file = model_path
+    with (ModelContextMgr(pickle_file, data_archive) as ctx, open(pickle_file, "rb") as f):
         restored_obj = pickle.load(f)
     return restored_obj

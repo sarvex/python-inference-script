@@ -20,9 +20,5 @@ if platform.system() == 'Windows':
     dll_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
     dll_paths = [dll_path, os.environ['PATH']]
     os.environ['PATH'] = ';'.join(dll_paths)
-else:
-    pass
-    #raise NotImplementedError(f'platform {platform.system()} is not supported')
-
 from . import ops
 from .model_context import save, load

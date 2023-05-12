@@ -22,10 +22,6 @@ if platform.system() == 'Windows':
     dll_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
     dll_paths = [dll_path, os.environ['PATH']]
     os.environ['PATH'] = ';'.join(dll_paths)
-else:
-    pass
-    #raise NotImplementedError(f'platform {platform.system()} is not supported')
-
 if platform.system() == 'Windows':
     onnx_binding_library_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'lib/pyis_onnx.dll')
 elif platform.system() == "Linux":

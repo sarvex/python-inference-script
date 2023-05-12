@@ -52,7 +52,7 @@ def run_cmake_format(paths, check_only=True):
             subprocess.check_output(' '.join(cmd), stderr=subprocess.STDOUT, shell=True)
         except subprocess.CalledProcessError as e:
             failed_cnt += e.returncode
-            print(str(e))
+            print(e)
     return failed_cnt
 
 if __name__ == "__main__":

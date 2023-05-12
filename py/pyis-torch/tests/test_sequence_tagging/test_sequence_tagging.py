@@ -35,9 +35,7 @@ class Model(torch.nn.Module):
         #self._print_features(bigrams, 'bigrams: ')
         features = self.concat_featurizer.transform([unigrams, bigrams])
         features_lccrf = self.text_feature_to_lccrf(features)
-        #print(f'features: {features_lccrf}')
-        values = self.lccrf.predict(len(x), features_lccrf)
-        return values
+        return self.lccrf.predict(len(x), features_lccrf)
     
     def text_feature_to_lccrf(self, features:List[ops.TextFeature]) -> List[Tuple[int, int, float]]:
         res: List[Tuple[int, int, float]] = []

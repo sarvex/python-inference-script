@@ -54,7 +54,9 @@ class OnnxGen(ast.NodeVisitor):
         elif isinstance(node.value, ast.Name):
             self.output_names.append(node.value.id)
         else:
-            raise RuntimeError(f'return value could only be a named variable or a tuple of names variables')
+            raise RuntimeError(
+                'return value could only be a named variable or a tuple of names variables'
+            )
 
     def process_Add(self, op, inputs, output):
         left, right = inputs[0], inputs[1]

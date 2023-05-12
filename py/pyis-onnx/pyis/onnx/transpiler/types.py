@@ -28,11 +28,10 @@ class Types:
 
         if isinstance(ast_node, ast.Subscript):
             type = ast_node.value.id
-            if type == 'List':
-                inner_type = Types.annotation_to_py(ast_node.slice.value)
-                return typing.List[inner_type]
-            else:
+            if type != 'List':
                 raise TypeError(f'unsupported annotation type {type}')
+            inner_type = Types.annotation_to_py(ast_node.slice.value)
+            return typing.List[inner_type]
 
     @staticmethod
     def py_to_tensor(t):

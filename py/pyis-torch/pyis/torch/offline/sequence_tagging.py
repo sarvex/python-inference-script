@@ -44,8 +44,7 @@ class SequenceTagging:
         # generate liblinear training data from text_features and ys.
         SequenceTagging.text_features_to_lccrf(xs, ys, data_file)
         ops.LinearChainCRF.train(data_file, model_file, alg, max_iter)
-        lccrf = ops.LinearChainCRF(model_file)
-        return lccrf
+        return ops.LinearChainCRF(model_file)
 
     @staticmethod
     def _transform_single_input(featurizer, xs):
@@ -65,22 +64,16 @@ class SequenceTagging:
 
         with io.open(data_file, 'w', newline='\n') as f:
             for x, y in zip(xs, ys):
-                # process features:
-                # 1. group features by its position(the `from` token idx)
-                # 2. accumulate feature values of same feature id and same position
-                # key: token idx, value: [feature id, feature value]
-                features: List[Dict[int, float]] = []
                 token_cnt = len(y)
-                for i in range(token_cnt):
-                    features.append({})
+                features: List[Dict[int, float]] = [{} for _ in range(token_cnt)]
                 for feature in x:
                     idx = feature.pos()[0]
                     if idx < 0 or idx >= token_cnt:
                         raise RuntimeError(f'invalid token idx {idx}, total token count is {token_cnt}')
-                    
+
                     fid = feature.id()
                     if fid < 0:
-                        raise RuntimeError(f'negative feature id is illegal')
+                        raise RuntimeError('negative feature id is illegal')
                     if fid not in features:
                         features[idx][fid] = 0.0
                     features[idx][fid] += feature.value()
@@ -90,5 +83,5 @@ class SequenceTagging:
                     for fid in sorted(fs):
                         print(f' |1 {fid}:{fs[fid]}', file=f, end='')
                     print('', file=f)
-                
+
                 print('', file=f)

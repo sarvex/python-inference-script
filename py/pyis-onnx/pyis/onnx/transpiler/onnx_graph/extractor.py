@@ -73,12 +73,10 @@ class Extractor:
             input_names: List[str],
             output_names: List[str]
         ) -> List[onnx.NodeProto]:
-        reachable_nodes:List[onnx.NodeProto] = list()
+        reachable_nodes: List[onnx.NodeProto] = []
         for name in output_names:
             self._dfs_search_reachable_nodes(name, input_names, reachable_nodes)
-        # needs to be topology sorted.
-        nodes = [n for n in self.graph.node if n in reachable_nodes]
-        return nodes
+        return [n for n in self.graph.node if n in reachable_nodes]
 
     def _collect_reachable_tensors(
             self,

@@ -47,8 +47,7 @@ class TextClassification:
         # generate liblinear training data from text_features and ys.
         TextClassification.text_features_to_libsvm(xs, ys, data_file)
         ops.LinearSVM.train(data_file, model_file, solver_type, eps, C, p, bias)
-        lib_linear = ops.LinearSVM(model_file)
-        return lib_linear
+        return ops.LinearSVM(model_file)
 
     @staticmethod
     def _transform_single_input(featurizer, xs):

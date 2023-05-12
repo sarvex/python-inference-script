@@ -11,8 +11,7 @@ def get_label(tokens: torch.Tensor):
 
 class Model(torch.nn.Module):
     def forward(self, tokens: torch.Tensor):
-        label = get_label(tokens)
-        return label
+        return get_label(tokens)
 
 m = Model()
 tokens = torch.randint(0, 100000, (10,))

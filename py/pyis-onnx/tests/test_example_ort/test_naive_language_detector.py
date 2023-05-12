@@ -19,9 +19,9 @@ def create_test_model(input_dims):
         'output', onnx_proto.TensorProto.INT64, [None])
 
     graph = helper.make_graph(nodes, 'test0', [text], [output])
-    model = helper.make_model(
-        graph, opset_imports=[helper.make_operatorsetid("", 12)])
-    return model
+    return helper.make_model(
+        graph, opset_imports=[helper.make_operatorsetid("", 12)]
+    )
 
 
 def run_language_detector(input1, expect_result):
